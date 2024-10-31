@@ -8,25 +8,34 @@ def handle_payment(amount):
     global amount_payed
     amount = int(enteredAmount)
 
-    if amount not in ACCEPTED_COINS:
-        return "You can only use 25, 10 or 5 coins to pay!"
+    check_amount(amount)
     
-    amount_payed += amount
-
     while amount_payed < 50:
-        requestPayment = input("Continue adding more coins to purchase: ")
+        print('Amount: ', amount_payed)
+        requestPayment = input("Add more coins to purchase (50 coins required): ")
         next_amount = int(requestPayment)
 
-        if next_amount not in ACCEPTED_COINS:
-            return "You can only use 25, 10 or 5 coins to pay!"
-    
-        amount_payed += next_amount 
-    
+        check_amount(next_amount)
+        
     if amount_payed > 50:
         change_owed = amount_payed - 50
         return "Successfully purchase Coca-Cola bottle at 50 cents and we owe you " + str(change_owed) + " cents"
     else:
         return "Successfully purchase Coca-Cola bottle at 50 cents"
+    
+
+def check_amount(amount_entered):
+    global amount_payed
+
+    if amount_entered not in ACCEPTED_COINS:
+        print('Amount: ', amount_payed)
+        print("You can only use 25, 10 or 5 coins to pay!")
+        requestPayment = input("Add more coins to purchase (50 coins required): ")
+        next_amount = int(requestPayment)
+
+        check_amount(next_amount)
+    else:
+        amount_payed += amount_entered
     
 
 
